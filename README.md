@@ -27,4 +27,4 @@ Por padrão é adicionado uma categoria para cookies essencias.
 
 | Categoria     | Descrição                                                                                      |
 |---------------|:-----------------------------------------------------------------------------------------------|
-| analytics     | Use para scripts que coletam dados para estatiscas e/ou performance. Exemplo: Google Analytics |
+| analytics     | Use para scripts que coletam dados para estatísticas e/ou performance. Exemplo: Google Analytics |
