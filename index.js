@@ -106,7 +106,7 @@ window.addEventListener('load', function () {
                 settings_modal: {
                     title: logo,
                     save_settings_btn: 'Salvar configurações',
-                    accept_all_btn: 'Acietar todos',
+                    accept_all_btn: 'Aceitar todos',
                     reject_all_btn: 'Rejeitar todos',
                     close_btn_label: 'Fechar',
                     cookie_table_headers: [
