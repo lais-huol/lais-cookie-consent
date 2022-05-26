@@ -10,7 +10,7 @@ Adicione o script do Lais Cookie Consent antes do final do `</body>`
     <head> <!-- conteúdo do head --> </head>
     <body>
         <!-- conteúdo do body -->
-        <script defer src="https://cdn.jsdelivr.net/gh/lais-huol/lais-cookie-consent@1.0.0/dist/lais-cookie-consent.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/gh/lais-huol/lais-cookie-consent@1.0.1/dist/lais-cookie-consent.min.js"></script>
     </body>
 </html>
 ```
