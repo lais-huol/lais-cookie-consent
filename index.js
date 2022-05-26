@@ -13,40 +13,94 @@ const logo = `
 </svg>
 `;
 
-const CATEGORIES_SETTINGS = [
-    {
-        title: 'Cookies de performance e estatísticas',
-        description: 'Esses cookies permitem que o site se lembre das escolhas que você fez no passado',
-        toggle: {
-            value: 'analytics',
-            enabled: false,
-            readonly: false
-        },
-        cookie_table: [
-            {
-                col1: '^_ga',
-                col2: 'google.com',
-                col3: '2 anos',
-                col4: 'descrição ...',
-                is_regex: true
+const CATEGORIES_SETTINGS = {
+    'pt-BR': [
+        {
+            title: 'Cookies de performance e estatísticas',
+            description: 'Esses cookies permitem que o site se lembre das escolhas que você fez no passado',
+            toggle: {
+                value: 'analytics',
+                enabled: false,
+                readonly: false
             },
-            {
-                col1: '_gid',
-                col2: 'google.com',
-                col3: '1 dia',
-                col4: 'descrição ...',
-            }
-        ]
-    },
-    // {
-    //     title: 'Outro tipo de categoria de cookies',
-    //     description: 'Descrição do que o cookie faz',
-    //     toggle: {
-    //         value: 'targeting',
-    //         enabled: false,
-    //         readonly: false
-    //     }
-]
+            cookie_table: [
+                {
+                    col1: '^_ga',
+                    col2: 'google.com',
+                    col3: '2 anos',
+                    col4: 'descrição ...',
+                    is_regex: true
+                },
+                {
+                    col1: '_gid',
+                    col2: 'google.com',
+                    col3: '1 dia',
+                    col4: 'descrição ...',
+                }
+            ]
+        },
+        // {
+        //     title: 'Outro tipo de categoria de cookies',
+        //     description: 'Descrição do que o cookie faz',
+        //     toggle: {
+        //         value: 'targeting',
+        //         enabled: false,
+        //         readonly: false
+        //     }
+    ],
+    'en': [
+        {
+            title: 'Cookies de performance e estatísticas',
+            description: 'Esses cookies permitem que o site se lembre das escolhas que você fez no passado',
+            toggle: {
+                value: 'analytics',
+                enabled: false,
+                readonly: false
+            },
+            cookie_table: [
+                {
+                    col1: '^_ga',
+                    col2: 'google.com',
+                    col3: '2 anos',
+                    col4: 'descrição ...',
+                    is_regex: true
+                },
+                {
+                    col1: '_gid',
+                    col2: 'google.com',
+                    col3: '1 dia',
+                    col4: 'descrição ...',
+                }
+            ]
+        },
+    ],
+    'es': [
+        {
+            title: 'Cookies de performance e estatísticas',
+            description: 'Esses cookies permitem que o site se lembre das escolhas que você fez no passado',
+            toggle: {
+                value: 'analytics',
+                enabled: false,
+                readonly: false
+            },
+            cookie_table: [
+                {
+                    col1: '^_ga',
+                    col2: 'google.com',
+                    col3: '2 anos',
+                    col4: 'descrição ...',
+                    is_regex: true
+                },
+                {
+                    col1: '_gid',
+                    col2: 'google.com',
+                    col3: '1 dia',
+                    col4: 'descrição ...',
+                }
+            ]
+        },
+    ],
+}
 
 window.addEventListener('load', function () {
     // adiciona o css do vanilla-cookieconsent ao documento
@@ -62,14 +116,18 @@ window.addEventListener('load', function () {
     const dedupedCategories = [...new Set(categories)];
 
     // filtra as configurações de categorias para somente aquelas que foram encontradas na página
-    const filteredCategoriesSettings = CATEGORIES_SETTINGS.filter((cs) => dedupedCategories.includes(cs.toggle.value));
+    //const filteredCategoriesSettings = CATEGORIES_SETTINGS.filter((cs) => dedupedCategories.includes(cs.toggle.value));
+    const filteredCategoriesSettings = Object.keys(CATEGORIES_SETTINGS).reduce((prev, key) => ({
+        ...prev,
+        [key]: CATEGORIES_SETTINGS[key].filter((cs) => dedupedCategories.includes(cs.toggle.value)),
+    }), {})
 
     const cc = initCookieConsent();
 
     cc.run({
         current_lang: 'pt-BR',
         cookie_name: 'lais_cookieconsent',
-        // auto_language: null,                         // default: null; could also be 'browser' or 'document'
+        auto_language: 'document',                         // default: null; could also be 'browser' or 'document'
         // autoclear_cookies : true,                    // default: false
         page_scripts: true,
         // delay: 0,                                // default: 0
@@ -128,7 +186,99 @@ window.addEventListener('load', function () {
                                 readonly: true
                             }
                         },
-                        ...filteredCategoriesSettings,
+                        ...filteredCategoriesSettings['pt-BR'],
+                        {
+                            title: 'Mais informações',
+                            description: 'Para qualquer dúvida em relação à nossa política de cookies e suas escolhas, entre em <a class="cc-link" href="https://lais.huol.ufrn.br/contato">contato conosco</a>.',
+                        }
+                    ]
+                }
+            },
+            'en': {
+                consent_modal: {
+                    title: 'We are using cookies! ',
+                    description: 'Olá, este site usa cookies essenciais para garantir seu bom funcionamento e cookies de rastreamento para entender como você interage com ele. Este último será definido somente após o consentimento. <button type="button" data-cc="c-settings" class="cc-link">Deixe-me escolher</button>',
+                    primary_btn: {
+                        text: 'Aceitar todos',
+                        role: 'accept_all'              // 'accept_selected' or 'accept_all'
+                    },
+                    secondary_btn: {
+                        text: 'Rejeitar todos',
+                        role: 'accept_necessary'        // 'settings' or 'accept_necessary'
+                    }
+                },
+                settings_modal: {
+                    title: logo,
+                    save_settings_btn: 'Salvar configurações',
+                    accept_all_btn: 'Aceitar todos',
+                    reject_all_btn: 'Rejeitar todos',
+                    close_btn_label: 'Fechar',
+                    cookie_table_headers: [
+                        {col1: 'Nome'},
+                        {col2: 'Domínio'},
+                        {col3: 'Expiração'},
+                        {col4: 'Descrição'}
+                    ],
+                    blocks: [
+                        {
+                            title: 'Uso de cookies',
+                            description: 'Nós usamos cookies para garantir as funcionalidades básicas do site e melhorar sua experiência online. Você pode escolher cada categoria para ativar/desativar sempre que quiser. Para obter mais detalhes relativos a cookies e outros dados confidenciais, leia a <a href="https://lais.huol.ufrn.br/politica-de-privacidade" class="cc-link">política de privacidade</a> completa.'
+                        }, {
+                            title: 'Cookies estritamente necessários',
+                            description: 'Esses cookies são essenciais para o bom funcionamento do site. Sem esses cookies, o site não funcionaria corretamente',
+                            toggle: {
+                                value: 'necessary',
+                                enabled: true,
+                                readonly: true
+                            }
+                        },
+                        ...filteredCategoriesSettings['en'],
+                        {
+                            title: 'Mais informações',
+                            description: 'Para qualquer dúvida em relação à nossa política de cookies e suas escolhas, entre em <a class="cc-link" href="https://lais.huol.ufrn.br/contato">contato conosco</a>.',
+                        }
+                    ]
+                }
+            },
+            'es': {
+                consent_modal: {
+                    title: '¡Usamos cookies! ',
+                    description: 'Olá, este site usa cookies essenciais para garantir seu bom funcionamento e cookies de rastreamento para entender como você interage com ele. Este último será definido somente após o consentimento. <button type="button" data-cc="c-settings" class="cc-link">Deixe-me escolher</button>',
+                    primary_btn: {
+                        text: 'Aceitar todos',
+                        role: 'accept_all'              // 'accept_selected' or 'accept_all'
+                    },
+                    secondary_btn: {
+                        text: 'Rejeitar todos',
+                        role: 'accept_necessary'        // 'settings' or 'accept_necessary'
+                    }
+                },
+                settings_modal: {
+                    title: logo,
+                    save_settings_btn: 'Salvar configurações',
+                    accept_all_btn: 'Aceitar todos',
+                    reject_all_btn: 'Rejeitar todos',
+                    close_btn_label: 'Fechar',
+                    cookie_table_headers: [
+                        {col1: 'Nome'},
+                        {col2: 'Domínio'},
+                        {col3: 'Expiração'},
+                        {col4: 'Descrição'}
+                    ],
+                    blocks: [
+                        {
+                            title: 'Uso de cookies',
+                            description: 'Nós usamos cookies para garantir as funcionalidades básicas do site e melhorar sua experiência online. Você pode escolher cada categoria para ativar/desativar sempre que quiser. Para obter mais detalhes relativos a cookies e outros dados confidenciais, leia a <a href="https://lais.huol.ufrn.br/politica-de-privacidade" class="cc-link">política de privacidade</a> completa.'
+                        }, {
+                            title: 'Cookies estritamente necessários',
+                            description: 'Esses cookies são essenciais para o bom funcionamento do site. Sem esses cookies, o site não funcionaria corretamente',
+                            toggle: {
+                                value: 'necessary',
+                                enabled: true,
+                                readonly: true
+                            }
+                        },
+                        ...filteredCategoriesSettings['es'],
                         {
                             title: 'Mais informações',
                             description: 'Para qualquer dúvida em relação à nossa política de cookies e suas escolhas, entre em <a class="cc-link" href="https://lais.huol.ufrn.br/contato">contato conosco</a>.',
