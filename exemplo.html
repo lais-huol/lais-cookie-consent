@@ -9,6 +9,11 @@
 
   <script type="text/plain" data-cookiecategory="analytics">
     console.log('Foi permitido. Executando...');
+
+    const node = document.createElement("p");
+    const textnode = document.createTextNode("Foi permitido. Executando...");
+    node.appendChild(textnode);
+    document.body.appendChild(node);
   </script>
 
   <script defer src="./dist/lais-cookie-consent.min.js"></script>
