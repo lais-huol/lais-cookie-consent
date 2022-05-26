@@ -4,7 +4,7 @@ module.exports = {
     mode: 'production',
     entry: './index.js',
     output: {
-        filename: 'lais-cookieconsent.min.js',
+        filename: 'lais-cookie-consent.min.js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
